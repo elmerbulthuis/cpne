@@ -1,0 +1,14 @@
+{
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "spelling": "cspell lint",
+    "formatting": "prettier --check --ignore-unknown *",
+    "fix-formatting": "prettier --write --ignore-unknown *"
+  },
+  "devDependencies": {
+    "@cspell/dict-en_us": "^4.4.33",
+    "cspell": "^9.8.0",
+    "prettier": "^3.8.3"
+  }
+}

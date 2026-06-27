@@ -1,0 +1,59 @@
+# yaml-language-server: $schema=https://taskfile.dev/schema.json
+
+version: "3"
+
+tasks:
+  install:
+    desc: Install everything
+    cmds:
+      - task: install:npm
+
+  check:
+    desc: Check everything
+    cmds:
+      - task: check:formatting
+      - task: check:spelling
+
+  test:
+    desc: Test everything
+    cmds: []
+
+  fix:
+    desc: Fix everything
+    cmds:
+      - task: fix:formatting
+
+  build:
+    desc: Build everything
+    cmds: []
+
+  install:npm:
+    run: once
+    desc: Install Node.js dependencies
+    sources:
+      - package-lock.json
+    generates:
+      - node_modules/**/*
+    cmds:
+      - npm clean-install
+
+  check:formatting:
+    desc: Check formatting
+    deps:
+      - install:npm
+    cmds:
+      - npm run formatting
+
+  check:spelling:
+    desc: Check spelling
+    deps:
+      - install:npm
+    cmds:
+      - npm run spelling
+
+  fix:formatting:
+    desc: Fix formatting
+    deps:
+      - install:npm
+    cmds:
+      - npm run fix-formatting

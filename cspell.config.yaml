@@ -1,0 +1,18 @@
+version: "0.2"
+import:
+  - "@cspell/dict-en_us/cspell-ext.json"
+dictionaries:
+  - en_us
+  - custom
+languageId: "*"
+allowCompoundWords: true
+useGitignore: true
+files:
+  - "**"
+ignorePaths:
+  - examples
+enableFiletypes:
+  - "*"
+dictionaryDefinitions:
+  - name: custom
+    path: dictionary.txt
