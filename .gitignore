@@ -5,6 +5,7 @@
 # file exceptions
 
 !.gitignore
+!.trivyignore
 
 # directories
 
