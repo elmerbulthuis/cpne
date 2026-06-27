@@ -12,12 +12,16 @@ tasks:
     cmds:
       - task: install:npm
 
+  audit:
+    desc: Audit everything
+    cmds:
+      - task: audit:trivy-kubernetes
+
   check:
     desc: Check everything
     cmds:
       - task: check:formatting
       - task: check:spelling
-      - task: check:trivy-kubernetes
 
   test:
     desc: Test everything
@@ -43,6 +47,13 @@ tasks:
     cmds:
       - npm clean-install
 
+  audit:trivy-kubernetes:
+    deps:
+      - build:kubernetes
+    cmds:
+      - >
+        trivy config dist/kubernetes-*.yaml
+
   check:formatting:
     desc: Check formatting
     deps:
@@ -56,16 +67,6 @@ tasks:
       - install:npm
     cmds:
       - npm run spelling
-
-  check:trivy-kubernetes:
-    deps:
-      - build:kubernetes
-    cmds:
-      - for:
-          var: OVERLAYS
-          as: OVERLAY
-        cmd: >
-          trivy config dist/kubernetes-{{.OVERLAY}}.yaml
 
   fix:formatting:
     desc: Fix formatting
