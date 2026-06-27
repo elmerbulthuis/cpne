@@ -25,7 +25,8 @@ tasks:
 
   build:
     desc: Build everything
-    cmds: []
+    cmds:
+      - task: build:kubernetes:overlay
 
   install:npm:
     run: once
@@ -57,3 +58,27 @@ tasks:
       - install:npm
     cmds:
       - npm run fix-formatting
+
+  build:kubernetes:
+    desc: Build Kubernetes manifests
+    cmds:
+      - task: build:kubernetes:overlay
+        vars:
+          OVERLAY: local
+
+  build:kubernetes:overlay:
+    run: once
+    desc: Build Kubernetes manifests
+    sources:
+      - infrastructure/kubernetes/**/*
+    generates:
+      - out/{{.OVERLAY}}.yaml
+    requires:
+      vars:
+        - OVERLAY
+    cmds:
+      - mkdir -p dist
+      - >
+        kustomize build
+        --output dist/{{.OVERLAY}}.yaml
+        infrastructure/kubernetes/overlays/{{.OVERLAY}}
