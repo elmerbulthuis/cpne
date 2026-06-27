@@ -2,6 +2,10 @@
 
 version: "3"
 
+vars:
+  OVERLAYS:
+    - local
+
 tasks:
   install:
     desc: Install everything
@@ -13,6 +17,7 @@ tasks:
     cmds:
       - task: check:formatting
       - task: check:spelling
+      - task: check:trivy-kubernetes
 
   test:
     desc: Test everything
@@ -26,7 +31,7 @@ tasks:
   build:
     desc: Build everything
     cmds:
-      - task: build:kubernetes:overlay
+      - task: build:kubernetes
 
   install:npm:
     run: once
@@ -52,6 +57,16 @@ tasks:
     cmds:
       - npm run spelling
 
+  check:trivy-kubernetes:
+    deps:
+      - build:kubernetes
+    cmds:
+      - for:
+          var: OVERLAYS
+          as: OVERLAY
+        cmd: >
+          trivy config dist/kubernetes-{{.OVERLAY}}.yaml
+
   fix:formatting:
     desc: Fix formatting
     deps:
@@ -60,25 +75,18 @@ tasks:
       - npm run fix-formatting
 
   build:kubernetes:
-    desc: Build Kubernetes manifests
-    cmds:
-      - task: build:kubernetes:overlay
-        vars:
-          OVERLAY: local
-
-  build:kubernetes:overlay:
     run: once
     desc: Build Kubernetes manifests
     sources:
       - infrastructure/kubernetes/**/*
     generates:
-      - out/{{.OVERLAY}}.yaml
-    requires:
-      vars:
-        - OVERLAY
+      - dist/kubernetes-*.yaml
     cmds:
       - mkdir -p dist
-      - >
-        kustomize build
-        --output dist/{{.OVERLAY}}.yaml
-        infrastructure/kubernetes/overlays/{{.OVERLAY}}
+      - for:
+          var: OVERLAYS
+          as: OVERLAY
+        cmd: >
+          kustomize build
+          --output dist/kubernetes-{{.OVERLAY}}.yaml
+          infrastructure/kubernetes/overlays/{{.OVERLAY}}
