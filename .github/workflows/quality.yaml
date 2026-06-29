@@ -37,6 +37,12 @@ jobs:
       - run: minikube start
       - run: task build:kubernetes
       - run: >
-          kubectl apply --warnings-as-errors -f dist/kubernetes-local-crd.yaml
+          kubectl apply
+          --server-side
+          --warnings-as-errors
+          --file dist/kubernetes-crd.yaml
       - run: >
-          kubectl apply --warnings-as-errors -f dist/kubernetes-hello.yaml
+          kubectl apply
+          --server-side
+          --warnings-as-errors
+          --file dist/kubernetes-hello.yaml

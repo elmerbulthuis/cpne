@@ -1,0 +1,2 @@
+resources:
+  - https://github.com/argoproj/argo-cd/manifests/ha/install.yaml?ref=v3.4.4
