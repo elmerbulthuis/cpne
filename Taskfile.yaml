@@ -19,10 +19,6 @@ tasks:
       - task: check:spelling
       - task: check:trivy-kubernetes
 
-  test:
-    desc: Test everything
-    cmds: []
-
   fix:
     desc: Fix everything
     cmds:
