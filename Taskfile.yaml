@@ -3,12 +3,12 @@
 version: "3"
 
 vars:
-  OVERLAYS_CRD:
+  KUSTOMIZE_OVERLAYS_CRD:
     - crd-local
-  OVERLAYS_APP:
+  KUSTOMIZE_OVERLAYS:
     - hello-local
-  OVERLAYS:
-    ref: concat .OVERLAYS_CRD .OVERLAYS_APP
+  HELM_CHARTS:
+    - goodmorning
 
 tasks:
   install:
@@ -31,7 +31,9 @@ tasks:
   build:
     desc: Build everything
     cmds:
-      - task: build:kubernetes
+      - task: build:kustomize-crd
+      - task: build:kustomize
+      - task: build:helm
 
   test:
     desc: Test everything
@@ -53,7 +55,7 @@ tasks:
       - build:kubernetes
     cmds:
       - for:
-          var: OVERLAYS_APP
+          var: KUSTOMIZE_OVERLAYS
           as: OVERLAY
         cmd: >
           trivy config --exit-code 1 dist/kubernetes-{{.OVERLAY}}.yaml
@@ -79,9 +81,9 @@ tasks:
     cmds:
       - npm run fix-formatting
 
-  build:kubernetes:
+  build:kustomize-crd:
     run: once
-    desc: Build Kubernetes manifests
+    desc: Build Kubernetes CRD manifests from kustomize
     sources:
       - infrastructure/kubernetes/**/*
     generates:
@@ -89,12 +91,45 @@ tasks:
     cmds:
       - mkdir -p dist
       - for:
-          var: OVERLAYS
+          var: KUSTOMIZE_OVERLAYS_CRD
           as: OVERLAY
         cmd: >
           kustomize build
           --output dist/kubernetes-{{.OVERLAY}}.yaml
           infrastructure/kubernetes/overlays/{{.OVERLAY}}
+
+  build:kustomize:
+    run: once
+    desc: Build Kubernetes manifests from kustomize
+    sources:
+      - infrastructure/kubernetes/**/*
+    generates:
+      - dist/kubernetes-*.yaml
+    cmds:
+      - mkdir -p dist
+      - for:
+          var: KUSTOMIZE_OVERLAYS
+          as: OVERLAY
+        cmd: >
+          kustomize build
+          --output dist/kubernetes-{{.OVERLAY}}.yaml
+          infrastructure/kubernetes/overlays/{{.OVERLAY}}
+
+  build:helm:
+    run: once
+    desc: Build Kubernetes manifests from helm
+    sources:
+      - infrastructure/helm/**/*
+    generates:
+      - dist/kubernetes-*.yaml
+    cmds:
+      - mkdir -p dist
+      - for:
+          var: HELM_CHARTS
+          as: CHART
+        cmd: >
+          helm template hello ./infrastructure/helm/{{.CHART}} >
+          dist/kubernetes-{{.CHART}}/
 
   test:kubernetes-dry-run:
     deps:
