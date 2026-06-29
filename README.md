@@ -43,4 +43,14 @@ Expose Argo CD UI via
 kubectl port-forward -n argo-rollouts services/argo-rollouts-dashboard 3100:3100
 ```
 
-Go to [localhost:3100](http://localhost:3100) and ignore the https warnings and login with `admin` and the password you retrieved earlier.
+Go to [localhost:3100](http://localhost:3100).
+
+## Argo Workflows
+
+Expose Argo CD UI via
+
+```sh
+kubectl port-forward -n argo services/argo-server 2746:2746
+```
+
+Go to [localhost:2746](http://localhost:2746).
