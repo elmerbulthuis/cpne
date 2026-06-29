@@ -49,8 +49,11 @@ tasks:
     deps:
       - build:kubernetes
     cmds:
-      - >
-        trivy config --exit-code 1 dist/kubernetes-*.yaml
+      - for:
+          var: OVERLAYS
+          as: OVERLAY
+        cmd: >
+          trivy config --exit-code 1 dist/kubernetes-{{.OVERLAY}}.yaml
 
   check:formatting:
     desc: Check formatting
