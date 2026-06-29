@@ -1,12 +1,12 @@
-KSV-0011
-KSV-0015
-KSV-0016
-KSV-0018
-KSV-0020
-KSV-0021
-KSV-0041
-KSV-0048
-KSV-0056
-KSV-0113
-KSV-0114
-KSV-0125
+KSV-0011  # Privileged escalation
+KSV-0015  # No CPU limits
+KSV-0016  # No memory limits
+KSV-0018  # Service account token automount
+KSV-0020  # Capabilities not dropped
+KSV-0021  # Privileged pod
+KSV-0041  # No run as non-root user
+KSV-0048  # Init container has no resource limits
+KSV-0056  # No volumes configured
+KSV-0113  # No network policy
+KSV-0114  # No securityContext defined
+KSV-0125  # No resource limits
