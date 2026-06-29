@@ -38,17 +38,19 @@ spec:
             - name: wwwroot
               mountPath: /srv/wwwroot
           securityContext:
-            runAsNonRoot: true
             allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
             capabilities:
               drop:
                 - ALL
-            seccompProfile:
-              type: RuntimeDefault
       volumes:
         - name: wwwroot
           configMap:
             name: hello-wwwroot
+      securityContext:
+        runAsNonRoot: true
+        seccompProfile:
+          type: RuntimeDefault
 
 ---
 apiVersion: v1
