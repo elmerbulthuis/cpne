@@ -2,6 +2,30 @@
 
 This is a practice repository for the Certified Cloud Native Platform Engineering Engineer (CNPE) exam.
 
+## TODO
+
+- [ ] open tofu
+- [ ] opencost
+
+- [x] argo cd
+- [ ] flux
+
+- [x] argo rollouts
+- [ ] flagger
+
+- [ ] linkerd
+- [ ] istio
+
+- [ ] argo workflows
+- [ ] tekton
+
+- [ ] kyverno
+- [ ] opa gatekeeper
+
+- [ ] prometheus
+- [ ] grafana
+- [ ] jaeger
+
 ## Getting started
 
 Use `task build` to build everything. The apply the crd-local manifest to your local cluster via
