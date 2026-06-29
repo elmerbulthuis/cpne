@@ -1,2 +1,3 @@
 resources:
-  - https://github.com/argoproj/argo-cd/manifests/ha/install.yaml?ref=v3.4.4
+  - namespace.yaml
+  - https://raw.githubusercontent.com/argoproj/argo-cd/v3.4.4/manifests/ha/install.yaml
