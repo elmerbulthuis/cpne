@@ -1,5 +1,8 @@
 namespace: hello
 
+generatorOptions:
+  disableNameSuffixHash: true
+
 resources:
   - namespace.yaml
   - hello.yaml
