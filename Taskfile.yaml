@@ -21,7 +21,8 @@ tasks:
     cmds:
       - task: check:formatting
       - task: check:spelling
-      - task: check:trivy-kubernetes
+      - task: check:trivy-kustomize
+      - task: check:trivy-helm
 
   fix:
     desc: Fix everything
@@ -31,7 +32,6 @@ tasks:
   build:
     desc: Build everything
     cmds:
-      - task: build:kustomize-crd
       - task: build:kustomize
       - task: build:helm
 
@@ -50,15 +50,26 @@ tasks:
     cmds:
       - npm clean-install
 
-  check:trivy-kubernetes:
+  check:trivy-kustomize:
     deps:
-      - build:kubernetes
+      - build:kustomize
     cmds:
       - for:
           var: KUSTOMIZE_OVERLAYS
           as: OVERLAY
         cmd: >
           trivy config --exit-code 1 dist/kubernetes-{{.OVERLAY}}.yaml
+
+  check:trivy-helm:
+    vars:
+      KUSTOMIZE_OVERLAYS:
+        ref: concat .KUSTOMIZE_OVERLAYS .KUSTOMIZE_OVERLAYS_CRD
+    cmds:
+      - for:
+          var: HELM_CHARTS
+          as: CHART
+        cmd: >
+          trivy config --exit-code 1 infrastructure/helm/{{.CHART}}
 
   check:formatting:
     desc: Check formatting
@@ -81,26 +92,12 @@ tasks:
     cmds:
       - npm run fix-formatting
 
-  build:kustomize-crd:
-    run: once
-    desc: Build Kubernetes CRD manifests from kustomize
-    sources:
-      - infrastructure/kubernetes/**/*
-    generates:
-      - dist/kubernetes-*.yaml
-    cmds:
-      - mkdir -p dist
-      - for:
-          var: KUSTOMIZE_OVERLAYS_CRD
-          as: OVERLAY
-        cmd: >
-          kustomize build
-          --output dist/kubernetes-{{.OVERLAY}}.yaml
-          infrastructure/kubernetes/overlays/{{.OVERLAY}}
-
   build:kustomize:
     run: once
     desc: Build Kubernetes manifests from kustomize
+    vars:
+      KUSTOMIZE_OVERLAYS:
+        ref: concat .KUSTOMIZE_OVERLAYS .KUSTOMIZE_OVERLAYS_CRD
     sources:
       - infrastructure/kubernetes/**/*
     generates:
@@ -133,10 +130,14 @@ tasks:
 
   test:kubernetes-dry-run:
     deps:
-      - build:kubernetes
+      - build:kustomize
+      - build:helm
+    vars:
+      MANIFESTS:
+        ref: concat .KUSTOMIZE_OVERLAYS_CRD .KUSTOMIZE_OVERLAYS .HELM_CHARTS
     cmds:
       - for:
-          var: OVERLAYS
-          as: OVERLAY
+          var: MANIFESTS
+          as: MANIFEST
         cmd: >
-          kubectl apply -f dist/kubernetes-{{.OVERLAY}}.yaml --dry-run=client
+          kubectl apply -f dist/kubernetes-{{.MANIFEST}}.yaml --dry-run=client
