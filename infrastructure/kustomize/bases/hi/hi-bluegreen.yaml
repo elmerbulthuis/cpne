@@ -21,7 +21,7 @@ spec:
             - echo $MESSAGE > /srv/wwwroot/index.html
           env:
             - name: MESSAGE
-              value: "--- Hello --"
+              value: "--- Hello ---"
           resources:
             requests:
               cpu: 10m
