@@ -37,7 +37,14 @@ spec:
           volumeMounts:
             - name: wwwroot
               mountPath: /srv/wwwroot
-
+          securityContext:
+            runAsNonRoot: true
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+            seccompProfile:
+              type: RuntimeDefault
       volumes:
         - name: wwwroot
           configMap:
