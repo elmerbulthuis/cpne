@@ -36,4 +36,5 @@ jobs:
           version: "3.37"
       - run: minikube start
       - run: task build:kubernetes
-      - run: kubectl apply -f dist/kubernetes-local.yaml
+      - run: >
+          kubectl apply --warnings-as-errors -f dist/kubernetes-local.yaml
