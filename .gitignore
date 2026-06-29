@@ -5,10 +5,12 @@
 # file exceptions
 
 !.gitignore
+!.trivyignore
 
 # directories
 
 node_modules/
+dist/
 
 # directory exceptions
 
