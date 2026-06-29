@@ -1,0 +1,5 @@
+namespace: hi
+
+resources:
+  - namespace.yaml
+  - hi-bluegreen.yaml

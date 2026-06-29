@@ -7,6 +7,7 @@ vars:
     - crd-local
   KUSTOMIZE_OVERLAYS:
     - hello-local
+    - hi-local
   HELM_CHARTS:
     - goodmorning
 
@@ -100,8 +101,6 @@ tasks:
         ref: concat .KUSTOMIZE_OVERLAYS .KUSTOMIZE_OVERLAYS_CRD
     sources:
       - infrastructure/kustomize/**/*
-    generates:
-      - dist/kubernetes-*.yaml
     cmds:
       - mkdir -p dist
       - for:
@@ -117,8 +116,6 @@ tasks:
     desc: Build Kubernetes manifests from helm
     sources:
       - infrastructure/helm/**/*
-    generates:
-      - dist/kubernetes-*.yaml
     cmds:
       - mkdir -p dist
       - for:
