@@ -17,7 +17,8 @@ spec:
           memory: 100Mi
       command:
         - wget
-      args: goodmorning:{{ .Values.service.port }}']
+      args:
+        - goodmorning:{{ .Values.service.port }}
       securityContext:
         runAsUser: 65534 # nobody
         runAsGroup: 65534 # nobody

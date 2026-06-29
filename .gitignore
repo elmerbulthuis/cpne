@@ -6,6 +6,7 @@
 
 !.gitignore
 !.trivyignore
+!.prettierignore 
 
 # directories
 

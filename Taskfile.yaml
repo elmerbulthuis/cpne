@@ -126,7 +126,7 @@ tasks:
           as: CHART
         cmd: >
           helm template hello ./infrastructure/helm/{{.CHART}} >
-          dist/kubernetes-{{.CHART}}/
+          dist/kubernetes-{{.CHART}}.yaml
 
   test:kubernetes-dry-run:
     deps:
