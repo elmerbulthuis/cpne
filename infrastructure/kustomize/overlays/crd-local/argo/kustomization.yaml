@@ -1,0 +1,7 @@
+namespace: argo
+
+resources:
+  - ../../../bases/argo
+
+patches:
+  - path: patches.yaml
