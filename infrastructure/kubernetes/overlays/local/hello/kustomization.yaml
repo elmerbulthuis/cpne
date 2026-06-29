@@ -1,0 +1,8 @@
+namespace: hello
+
+resources:
+  - ../../../bases/hello
+
+replicas:
+  - name: hello
+    count: 1

@@ -1,2 +1,3 @@
 resources:
   - ../../bases/cert-manager
+  - hello

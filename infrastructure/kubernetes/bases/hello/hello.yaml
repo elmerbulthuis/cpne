@@ -1,0 +1,59 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: hello
+  name: hello
+spec:
+  selector:
+    matchLabels:
+      app: hello
+  template:
+    metadata:
+      labels:
+        app: hello
+    spec:
+      containers:
+        - command:
+            - python
+            - -m
+            - http.server
+            - -d
+            - /srv/wwwroot
+            - "8080"
+          image: python:3-alpine
+          name: python
+          ports:
+            - name: http
+              containerPort: 8080
+          resources:
+            requests:
+              cpu: 10m
+              memory: 10MiB
+            limits:
+              cpu: 100m
+              memory: 100MiB
+          volumeMounts:
+            - name: wwwroot
+              mountPath: /srv/wwwroot
+
+      volumes:
+        - name: wwwroot
+          configMap:
+            name: hello-wwwroot
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: hello
+spec:
+  type: ClusterIP
+  selector:
+    app: hello
+  ports:
+    - name: http
+      protocol: TCP
+      port: 8080
+      targetPort: http

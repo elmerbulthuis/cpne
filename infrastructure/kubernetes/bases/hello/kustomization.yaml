@@ -1,0 +1,10 @@
+namespace: hello
+
+resources:
+  - namespace.yaml
+  - hello.yaml
+
+configMapGenerator:
+  - name: hello-wwwroot
+    files:
+      - index.html
