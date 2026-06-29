@@ -29,6 +29,11 @@ tasks:
     cmds:
       - task: build:kubernetes
 
+  test:
+    desc: Test everything
+    cmds:
+      - task: test:kubernetes-dry-run
+
   install:npm:
     run: once
     desc: Install Node.js dependencies
@@ -83,3 +88,13 @@ tasks:
           kustomize build
           --output dist/kubernetes-{{.OVERLAY}}.yaml
           infrastructure/kubernetes/overlays/{{.OVERLAY}}
+
+  test:kubernetes-dry-run:
+    deps:
+      - build:kubernetes
+    cmds:
+      - for:
+          var: OVERLAYS
+          as: OVERLAY
+        cmd: >
+          kubectl apply -f dist/kubernetes-{{.OVERLAY}}.yaml --dry-run=client

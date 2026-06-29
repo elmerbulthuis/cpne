@@ -25,4 +25,15 @@ jobs:
         with:
           version: "3.37"
       - run: minikube start
-      - run: task build
+      - run: task test
+
+  deploy-local:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: go-task/setup-task@v1
+        with:
+          version: "3.37"
+      - run: minikube start
+      - run: task build:kubernetes
+      - run: kubectl apply -f dist/kubernetes-local.yaml
