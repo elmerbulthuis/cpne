@@ -9,5 +9,5 @@ spec:
   ports:
     - name: http
       protocol: TCP
-      port: .Values.service.port
+      port: "{{ .Values.service.port }}"
       targetPort: http
