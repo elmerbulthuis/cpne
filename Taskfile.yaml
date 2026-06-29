@@ -4,8 +4,8 @@ version: "3"
 
 vars:
   OVERLAYS:
-    - hello
-    - crd
+    - hello-local
+    - crd-local
 
 tasks:
   install:

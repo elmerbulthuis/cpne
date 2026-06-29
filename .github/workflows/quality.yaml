@@ -40,9 +40,9 @@ jobs:
           kubectl apply
           --server-side
           --warnings-as-errors
-          --file dist/kubernetes-crd.yaml
+          --file dist/kubernetes-crd-local.yaml
       - run: >
           kubectl apply
           --server-side
           --warnings-as-errors
-          --file dist/kubernetes-hello.yaml
+          --file dist/kubernetes-hello-local.yaml
