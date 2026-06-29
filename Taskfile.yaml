@@ -99,7 +99,7 @@ tasks:
       KUSTOMIZE_OVERLAYS:
         ref: concat .KUSTOMIZE_OVERLAYS .KUSTOMIZE_OVERLAYS_CRD
     sources:
-      - infrastructure/kubernetes/**/*
+      - infrastructure/kustomize/**/*
     generates:
       - dist/kubernetes-*.yaml
     cmds:
@@ -110,7 +110,7 @@ tasks:
         cmd: >
           kustomize build
           --output dist/kubernetes-{{.OVERLAY}}.yaml
-          infrastructure/kubernetes/overlays/{{.OVERLAY}}
+          infrastructure/kustomize/overlays/{{.OVERLAY}}
 
   build:helm:
     run: once
