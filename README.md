@@ -16,7 +16,7 @@ Now you have a cluster with quite a few CNPE resources installed and configured!
 
 We only check our applications manifests with trivy.
 
-## Argo
+## Argo CD
 
 Get the Argo CD UI admin password via
 
@@ -34,3 +34,13 @@ kubectl port-forward -n argocd  services/argocd-server 8080:80
 Go to [localhost:8080](http://localhost:8080) and ignore the https warnings and login with `admin` and the password you retrieved earlier.
 
 Create an application and point it to the `hello` application in this repository and have some fun with that!
+
+## Argo Rollouts
+
+Expose Argo CD UI via
+
+```sh
+kubectl port-forward -n argo-rollouts services/argo-rollouts-dashboard 3100:3100
+```
+
+Go to [localhost:3100](http://localhost:3100) and ignore the https warnings and login with `admin` and the password you retrieved earlier.

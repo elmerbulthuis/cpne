@@ -1,0 +1,6 @@
+namespace: argo-rollouts
+
+resources:
+  - namespace.yaml
+  - https://github.com/argoproj/argo-rollouts/releases/download/v1.9.0/install.yaml
+  - https://github.com/argoproj/argo-rollouts/releases/download/v1.9.0/dashboard-install.yaml

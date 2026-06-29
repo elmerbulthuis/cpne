@@ -1,0 +1,10 @@
+configurations:
+  - https://argoproj.github.io/argo-rollouts/features/kustomize/rollout-transform-kustomize-v5.yaml
+
+namespace: hi
+
+resources:
+  - ../../bases/hi
+
+patches:
+  - path: patches.yaml
