@@ -3,9 +3,12 @@
 version: "3"
 
 vars:
-  OVERLAYS:
-    - hello-local
+  OVERLAYS_CRD:
     - crd-local
+  OVERLAYS_APP:
+    - hello-local
+  OVERLAYS:
+    ref: concat .OVERLAYS_CRD .OVERLAYS_APP
 
 tasks:
   install:
@@ -50,7 +53,7 @@ tasks:
       - build:kubernetes
     cmds:
       - for:
-          var: OVERLAYS
+          var: OVERLAYS_APP
           as: OVERLAY
         cmd: >
           trivy config --exit-code 1 dist/kubernetes-{{.OVERLAY}}.yaml

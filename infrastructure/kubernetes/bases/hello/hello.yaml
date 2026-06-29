@@ -39,6 +39,7 @@ spec:
               mountPath: /srv/wwwroot
           securityContext:
             runAsUser: 65534 # nobody
+            runAsGroup: 65534 # nobody
             allowPrivilegeEscalation: false
             readOnlyRootFilesystem: true
             capabilities:
