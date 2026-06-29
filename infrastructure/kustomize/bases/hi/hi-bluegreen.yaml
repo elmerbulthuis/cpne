@@ -21,7 +21,7 @@ spec:
             - echo $MESSAGE > /srv/wwwroot/index.html
           env:
             - name: MESSAGE
-              value: "Hello!!!"
+              value: "Hello!!!!"
           resources:
             requests:
               cpu: 10m
@@ -82,7 +82,7 @@ spec:
     blueGreen:
       activeService: hi-bluegreen
       previewService: hi-bluegreen-preview
-      autoPromotionEnabled: true
+      autoPromotionEnabled: false
       autoPromotionSeconds: 5
 ---
 apiVersion: v1
