@@ -1,20 +1,10 @@
+configurations:
+  - https://argoproj.github.io/argo-rollouts/features/kustomize/rollout-transform-kustomize-v5.yaml
+
 namespace: hi
 
 resources:
   - ../../bases/hi
 
 patches:
-  - target:
-      kind: Rollout
-      name: hi-bluegreen
-    patch: |
-      - op: replace
-        path: /spec/replicas
-        value: 2
-  - target:
-      kind: Rollout
-      name: hi-canary
-    patch: |
-      - op: replace
-        path: /spec/replicas
-        value: 4
+  - path: patches.yaml

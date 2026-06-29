@@ -1,0 +1,14 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
+metadata:
+  name: hi-bluegreen
+spec:
+  replicas: 2
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
+metadata:
+  name: hi-canary
+spec:
+  replicas: 4
