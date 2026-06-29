@@ -1,0 +1,40 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: goodmorning-set
+  namespace: argocd
+spec:
+  generators:
+    - list:
+        elements:
+          - message: Goodmorning!!
+            namespace: goodmorning1
+          - message: Good-morning!!
+            namespace: goodmorning2
+          - message: Goodmorning...
+            namespace: goodmorning3
+  template:
+    metadata:
+      name: "{{namespace}}"
+      finalizers:
+        - resources-finalizer.argocd.argoproj.io
+    spec:
+      destination:
+        namespace: "{{namespace}}"
+        server: https://kubernetes.default.svc
+      source:
+        path: infrastructure/helm/goodmorning
+        repoURL: https://github.com/elmerbulthuis/cpne.git
+        targetRevision: main
+        helm:
+          parameters:
+            - name: message
+              value: "{{message}}"
+      project: default
+      syncPolicy:
+        syncOptions:
+          - CreateNamespace=true
+        automated:
+          prune: true
+          selfHeal: true
+          enabled: true
