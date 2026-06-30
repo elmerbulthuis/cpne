@@ -137,12 +137,3 @@ tasks:
           as: MANIFEST
         cmd: >
           kubectl apply -f dist/kubernetes-{{.MANIFEST}}.yaml --dry-run=client
-
-  generate:linkerd:
-    cmds:
-      - cmd: >
-          { echo '# generated via linkerd install --crds' ; echo '# spell-checker: disable' ; linkerd install --crds ; } >
-          infrastructure/kustomize/bases/linkerd/install-crds.yaml
-      - cmd: >
-          { echo '# generated via linkerd install' ; echo '# spell-checker: disable' ; linkerd install ; } >
-          infrastructure/kustomize/bases/linkerd/install.yaml
