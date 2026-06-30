@@ -45,15 +45,15 @@ spec:
   pipeline:
     - step: create-deployment-and-service
       functionRef:
-        name: function-patch-and-transform
+        name: crossplane-contrib-function-kro
       input:
         apiVersion: kro.fn.crossplane.io/v1alpha1
         kind: ResourceGraph
         status:
-          port: 0
+          port: ${service.spec.ports[0].nodePort}
         resources:
-          - name: deployment
-            base:
+          - id: deployment
+            template:
               apiVersion: apps/v1
               kind: Deployment
               metadata:
@@ -135,8 +135,10 @@ spec:
                       runAsNonRoot: true
                       seccompProfile:
                         type: RuntimeDefault
-          - name: service
-            base:
+            readyWhen:
+              - ${deployment.status.availableReplicas > 0}
+          - id: service
+            template:
               apiVersion: v1
               kind: Service
               metadata:
@@ -147,5 +149,8 @@ spec:
                   app: ${schema.metadata.name}
                 ports:
                   - name: http
+                    port: 8080
                     protocol: TCP
                     targetPort: http
+            readyWhen:
+              - ${has(service.spec.ports[0].nodePort)}
