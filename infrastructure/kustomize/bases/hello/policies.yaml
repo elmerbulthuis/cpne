@@ -1,0 +1,21 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: deny-ingress
+spec:
+  podSelector: {}
+  policyTypes:
+    - Ingress
+  ingress: []
+---
+apiVersion: policy.linkerd.io/v1beta3
+kind: Server
+metadata:
+  name: allow-mesh
+spec:
+  podSelector:
+    matchLabels:
+      app: hello
+  port: 8080
+  proxyProtocol: "HTTP/1"
