@@ -6,3 +6,5 @@ elmerbulthuis
 finalizer
 finalizers
 kyverno
+xpkg
+openAPIV3
