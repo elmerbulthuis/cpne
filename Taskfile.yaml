@@ -10,6 +10,7 @@ vars:
     - hi-local
     - greeter-local
     - colors-local
+    - monitoring-local
   HELM_CHARTS:
     - goodmorning
 

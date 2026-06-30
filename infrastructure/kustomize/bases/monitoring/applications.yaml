@@ -1,0 +1,45 @@
+---
+apiVersion: monitoring.coreos.com/v1
+kind: Prometheus
+metadata:
+  name: prometheus
+spec:
+  serviceAccountName: prometheus
+  retention: 1d
+  retentionSize: 1GB
+  podMonitorNamespaceSelector: {}
+  podMonitorSelector: {}
+  resources:
+    requests:
+      cpu: 10m
+      memory: 10Mi
+    limits:
+      cpu: 100m
+      memory: 100Mi
+---
+apiVersion: monitoring.coreos.com/v1
+kind: PodMonitor
+metadata:
+  name: linkerd-pods
+spec:
+  podMetricsEndpoints:
+    - port: "linkerd-admin"
+      path: /metrics
+  selector:
+    matchExpressions:
+      - key: linkerd.io/control-plane-ns
+        operator: Exists
+  namespaceSelector:
+    any: true
+---
+apiVersion: monitoring.coreos.com/v1
+kind: PodMonitor
+metadata:
+  name: metrics-pods
+spec:
+  podMetricsEndpoints:
+    - port: "metrics"
+      path: /metrics
+  selector: {}
+  namespaceSelector:
+    any: true

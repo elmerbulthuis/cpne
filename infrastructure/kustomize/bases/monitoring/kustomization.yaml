@@ -1,0 +1,7 @@
+namespace: monitoring
+
+resources:
+  - namespace.yaml
+  - applications.yaml
+  - rbac.yaml
+  - policies.yaml
