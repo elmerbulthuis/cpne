@@ -1,0 +1,49 @@
+---
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: mix
+spec:
+  workspaces:
+    - name: pipeline-state
+  tasks:
+    - name: add-cyan
+      taskRef:
+        name: print-message
+      workspaces:
+        - name: state
+          workspace: pipeline-state
+      params:
+        - name: message
+          value: Cyan
+    - name: add-magenta
+      taskRef:
+        name: print-message
+      workspaces:
+        - name: state
+          workspace: pipeline-state
+      params:
+        - name: message
+          value: Magenta
+    - name: add-yellow
+      taskRef:
+        name: print-message
+      workspaces:
+        - name: state
+          workspace: pipeline-state
+      params:
+        - name: message
+          value: Yellow
+    - name: result
+      taskRef:
+        name: print-message
+      workspaces:
+        - name: state
+          workspace: pipeline-state
+      params:
+        - name: message
+          value: Black
+      runAfter:
+        - add-magenta
+        - add-cyan
+        - add-yellow

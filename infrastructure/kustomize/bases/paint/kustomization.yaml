@@ -1,0 +1,6 @@
+namespace: paint
+
+resources:
+  - namespace.yaml
+  - pipelines.yaml
+  - tasks.yaml

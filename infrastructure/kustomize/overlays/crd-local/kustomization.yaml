@@ -7,4 +7,5 @@ resources:
   - ../../bases/argo-rollouts
   - ../../bases/crossplane-system
   - ../../bases/prometheus-operator
+  - ../../bases/tekton-operator
   - argo

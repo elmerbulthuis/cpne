@@ -10,6 +10,7 @@ vars:
     - hi-local
     - greeter-local
     - colors-local
+    - paint-local
     - monitoring-local
     - opencost-local
   HELM_CHARTS:
