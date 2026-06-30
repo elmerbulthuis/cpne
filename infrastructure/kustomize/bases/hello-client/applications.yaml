@@ -1,0 +1,46 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: hello-client
+  name: hello-client
+spec:
+  selector:
+    matchLabels:
+      app: hello-client
+  template:
+    metadata:
+      labels:
+        app: hello-client
+    spec:
+      containers:
+        - command:
+            - sh
+            - -c
+            - |
+              while true; do
+                wget --spider http://hello.hello:8080
+                sleep 5
+              done
+          image: alpine:3.24
+          name: client
+          resources:
+            requests:
+              cpu: 10m
+              memory: 10Mi
+            limits:
+              cpu: 100m
+              memory: 100Mi
+          securityContext:
+            runAsUser: 65534 # nobody
+            runAsGroup: 65534 # nobody
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - ALL
+      securityContext:
+        runAsNonRoot: true
+        seccompProfile:
+          type: RuntimeDefault

@@ -14,7 +14,7 @@ spec:
     spec:
       initContainers:
         - name: initialize
-          image: alpine:3.14
+          image: alpine:3.24
           command:
             - sh
             - -c

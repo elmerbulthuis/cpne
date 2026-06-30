@@ -1,4 +1,7 @@
+authzpolicy
 CNPE
+crds
+deconflict
 elmerbulthuis
 finalizer
 finalizers

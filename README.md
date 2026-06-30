@@ -16,7 +16,19 @@ Now you have a cluster with quite a few CNPE resources installed and configured!
 
 ## Linkerd
 
-TODO
+Keys are generated and put in the `values.yaml` file, this is of course a very dirty and dangerous thing that should never be allowed, except maybe for the playground that this repository is.
+
+See how hello-client is able to connect to the hello server. Use the following to verify that you are not:
+
+```
+kubectl run -ti --rm --image alpine bad-hello-client --namespace hello -- wget -qO- http://hello.hello:8080
+```
+
+But this will work:
+
+```
+kubectl run -ti --rm --image alpine good-hello-client --namespace hello-client -- wget -qO- http://hello.hello:8080
+```
 
 ## Istio
 

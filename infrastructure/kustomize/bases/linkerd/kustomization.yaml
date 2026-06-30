@@ -1,0 +1,13 @@
+namespace: linkerd
+
+resources:
+  - namespace.yaml
+
+helmCharts:
+  - repo: https://helm.linkerd.io/edge
+    name: linkerd-crds
+    version: 2026.6.3
+  - repo: https://helm.linkerd.io/edge
+    name: linkerd-control-plane
+    version: 2026.6.3 # edge-26.6.3, version-2.20
+    valuesFile: values.yaml
