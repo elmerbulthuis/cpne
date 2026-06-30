@@ -1,5 +1,5 @@
 KSV-0110 # default namespace, there is no default namespace for applications that are managed via a CD solution
 KSV-0125 # allow image from unstrusted registry
-KSV-0020 # allow runAsUser > 10000
-KSV-0021 # allow runAsGroup > 10000
+KSV-0020 # allow runAsUser < 10000
+KSV-0021 # allow runAsGroup < 10000
 KSV-0014 # allow readOnlyRootFilesystem = false
