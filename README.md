@@ -101,7 +101,7 @@ TODO
 
 ## Prometheus
 
-TODO
+Prometheus is installed via the operator, metrics are scraped via monitors.
 
 ## Grafana
 
