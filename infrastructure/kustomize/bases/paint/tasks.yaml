@@ -9,9 +9,14 @@ spec:
       type: string
       description: Messag to print
       default: ""
-
+  workspaces:
+    - name: state
   steps:
-    - name: echo
+    - name: write
       image: alpine:3.24
       script: |
-        echo "$(params.message)"
+        echo "$(params.message)" > "$(workspaces.state.path)/echo"
+    - name: cat
+      image: alpine:3.24
+      script: |
+        cat "$(workspaces.state.path)/echo"

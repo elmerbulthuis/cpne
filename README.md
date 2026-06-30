@@ -85,7 +85,13 @@ Go to [localhost:2746](http://localhost:2746).
 
 ## Tekton
 
-TODO
+Apply the `kubernetes-paint-local.yaml` manifest and run a tekton pipeline via:
+
+```sh
+tkn pipelines start -n paint mix --workspace name=pipeline-state,emptyDir="" --showlog
+```
+
+Files are persisted per task, this is because a task is a pod and the emptyDir's lifetime is that of the pod. So we get a fresh emptyDir for every step! This could be fixed with a pvc, but that is not for now!
 
 ## Trivy
 
