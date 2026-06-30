@@ -5,10 +5,10 @@ version: "3"
 vars:
   KUSTOMIZE_OVERLAYS_CRD:
     - crd-local
-    - greeter-local
   KUSTOMIZE_OVERLAYS:
     - hello-local
     - hi-local
+    - greeter-local
     - colors-local
   HELM_CHARTS:
     - goodmorning
