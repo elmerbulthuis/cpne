@@ -12,9 +12,15 @@ opencost:
 
   customPricing:
     enabled: true
-    provider: default
+    provider: custom
     costModel:
       description: custom cost model
-      CPU: 12.00
-      RAM: 10.50
-      storage: 40.25
+      CPU: 1.25
+      spotCPU: 0.006655
+      RAM: 0.50
+      spotRAM: 0.000892
+      GPU: 0.95
+      storage: 0.25
+      zoneNetworkEgress: 0.01
+      regionNetworkEgress: 0.01
+      internetNetworkEgress: 0.12
