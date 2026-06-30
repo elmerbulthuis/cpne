@@ -16,7 +16,7 @@ Now you have a cluster with quite a few CNPE resources installed and configured!
 
 ## Linkerd
 
-The Linkerd manifests can be generated via the `generate:linkerd` task.
+Keys are generated and put in the `values.yaml` file, this is of course a very dirty and dangerous thing that should never be allowed, except maybe for the playground that this repository is.
 
 ## Istio
 
