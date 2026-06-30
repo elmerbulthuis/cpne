@@ -11,6 +11,7 @@ vars:
     - greeter-local
     - colors-local
     - monitoring-local
+    - opencost-local
   HELM_CHARTS:
     - goodmorning
 

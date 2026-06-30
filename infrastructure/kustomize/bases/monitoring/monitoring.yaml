@@ -1,0 +1,57 @@
+---
+apiVersion: monitoring.coreos.com/v1
+kind: PodMonitor
+metadata:
+  name: linkerd-pods
+spec:
+  podMetricsEndpoints:
+    - port: "linkerd-admin"
+      path: /metrics
+  selector:
+    matchExpressions:
+      - key: linkerd.io/control-plane-ns
+        operator: Exists
+  namespaceSelector:
+    any: true
+---
+apiVersion: monitoring.coreos.com/v1
+kind: PodMonitor
+metadata:
+  name: metrics-pods
+spec:
+  podMetricsEndpoints:
+    - port: "metrics"
+      path: /metrics
+  selector: {}
+  namespaceSelector:
+    any: true
+---
+apiVersion: monitoring.coreos.com/v1
+kind: PodMonitor
+metadata:
+  name: http-metrics-pods
+spec:
+  podMetricsEndpoints:
+    - port: "http-metrics"
+      path: /metrics
+      metricRelabelings:
+        - sourceLabels: [exported_namespace]
+          targetLabel: namespace
+          action: replace
+        - sourceLabels: [exported_pod]
+          targetLabel: pod
+          action: replace
+        - sourceLabels: [exported_container]
+          targetLabel: container
+          action: replace
+        - regex: exported_namespace
+          action: labeldrop
+        - regex: exported_pod
+          action: labeldrop
+        - regex: exported_container
+          action: labeldrop
+  selector:
+    matchLabels:
+      app.kubernetes.io/component: exporter
+  namespaceSelector:
+    any: true

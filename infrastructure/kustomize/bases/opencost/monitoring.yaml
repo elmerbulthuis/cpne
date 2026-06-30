@@ -1,0 +1,12 @@
+---
+apiVersion: monitoring.coreos.com/v1
+kind: PodMonitor
+metadata:
+  name: metrics-pods
+spec:
+  podMetricsEndpoints:
+    - port: "http"
+      path: /metrics
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: opencost

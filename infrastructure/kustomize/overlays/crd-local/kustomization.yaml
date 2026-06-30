@@ -1,5 +1,6 @@
 resources:
   - ../../bases/gateway-api
+  - ../../bases/kube-state-metrics
   - ../../bases/linkerd
   - ../../bases/cert-manager
   - ../../bases/argocd

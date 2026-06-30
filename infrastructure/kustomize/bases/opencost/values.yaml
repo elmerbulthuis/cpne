@@ -1,0 +1,26 @@
+opencost:
+  prometheus:
+    internal:
+      namespaceName: monitoring
+      serviceName: prometheus-operated
+      port: 9090
+
+  metrics:
+    kubeStateMetrics:
+      emitKsmV1Metrics: false
+      emitKsmV1MetricsOnly: false
+
+  customPricing:
+    enabled: true
+    provider: custom
+    costModel:
+      description: custom cost model
+      CPU: 1.25
+      spotCPU: 0.25
+      RAM: 1.50
+      spotRAM: 0.5
+      GPU: 2.00
+      storage: 0.25
+      zoneNetworkEgress: 0.01
+      regionNetworkEgress: 0.01
+      internetNetworkEgress: 0.12

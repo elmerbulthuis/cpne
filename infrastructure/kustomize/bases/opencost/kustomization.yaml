@@ -1,0 +1,15 @@
+namespace: opencost
+
+resources:
+  - namespace.yaml
+  - monitoring.yaml
+
+helmCharts:
+  - repo: https://opencost.github.io/opencost-helm-chart
+    name: opencost
+    releaseName: opencost
+    version: 2.5.25
+    valuesFile: values.yaml
+
+patches:
+  - path: patches.yaml

@@ -113,7 +113,7 @@ TODO
 
 ## Open Cost
 
-TODO
+Open cost installed, node exporter is missing, cost is based on kube state metrics alone and with fictional values.
 
 ## Crossplane
 

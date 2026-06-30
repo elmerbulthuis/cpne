@@ -5,3 +5,4 @@ resources:
   - applications.yaml
   - rbac.yaml
   - policies.yaml
+  - monitoring.yaml

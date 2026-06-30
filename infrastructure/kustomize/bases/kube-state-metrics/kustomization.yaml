@@ -1,0 +1,4 @@
+namespace: kube-system
+
+resources:
+  - github.com/kubernetes/kube-state-metrics?ref=v2.19.1
