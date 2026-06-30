@@ -1,4 +1,5 @@
 resources:
+  - ../../bases/gateway-api
   - ../../bases/cert-manager
   - ../../bases/argocd
   - ../../bases/argo-rollouts
