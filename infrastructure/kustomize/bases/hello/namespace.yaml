@@ -9,3 +9,4 @@ metadata:
     pod-security.kubernetes.io/warn-version: v1.36
   annotations:
     linkerd.io/inject: enabled
+    config.linkerd.io/default-inbound-policy: deny
