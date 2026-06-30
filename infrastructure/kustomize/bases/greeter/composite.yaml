@@ -1,0 +1,156 @@
+---
+apiVersion: apiextensions.crossplane.io/v2
+kind: CompositeResourceDefinition
+metadata:
+  name: greeters.cnpe.elmerbulthuis.com
+spec:
+  scope: Namespaced
+  group: cnpe.elmerbulthuis.com
+  names:
+    kind: Greeter
+    plural: greeters
+    singular: greeter
+  versions:
+    - name: v1
+      served: true
+      referenceable: true
+      schema:
+        openAPIV3Schema:
+          type: object
+          properties:
+            spec:
+              type: object
+              properties:
+                message:
+                  description: Message to greet with
+                  type: string
+              required:
+                - message
+            status:
+              type: object
+              properties:
+                port:
+                  description: The node port of the application
+                  type: number
+---
+apiVersion: apiextensions.crossplane.io/v1
+kind: Composition
+metadata:
+  name: greeter
+spec:
+  compositeTypeRef:
+    apiVersion: cnpe.elmerbulthuis.com/v1
+    kind: Greeter
+  mode: Pipeline
+  pipeline:
+    - step: create-deployment-and-service
+      functionRef:
+        name: greeter-function-kro
+      input:
+        apiVersion: kro.fn.crossplane.io/v1alpha1
+        kind: ResourceGraph
+        status:
+          port: ${service.spec.ports[0].nodePort}
+        resources:
+          - id: deployment
+            template:
+              apiVersion: apps/v1
+              kind: Deployment
+              metadata:
+                labels:
+                  app: ${schema.metadata.name}
+                name: ${schema.metadata.name}
+              spec:
+                selector:
+                  matchLabels:
+                    app: ${schema.metadata.name}
+                template:
+                  metadata:
+                    labels:
+                      app: ${schema.metadata.name}
+                  spec:
+                    initContainers:
+                      - name: initialize
+                        image: alpine:3.14
+                        command:
+                          - sh
+                          - -c
+                          - echo $MESSAGE > /srv/wwwroot/index.html
+                        env:
+                          - name: MESSAGE
+                            value: ${schema.spec.message}
+                        resources:
+                          requests:
+                            cpu: 10m
+                            memory: 10Mi
+                          limits:
+                            cpu: 100m
+                            memory: 100Mi
+                        volumeMounts:
+                          - name: wwwroot
+                            mountPath: /srv/wwwroot
+                        securityContext:
+                          runAsUser: 65534 # nobody
+                          runAsGroup: 65534 # nobody
+                          allowPrivilegeEscalation: false
+                          readOnlyRootFilesystem: true
+                          capabilities:
+                            drop:
+                              - ALL
+                    containers:
+                      - command:
+                          - python
+                          - -m
+                          - http.server
+                          - -d
+                          - /srv/wwwroot
+                          - "8080"
+                        image: python:3-alpine
+                        name: python
+                        ports:
+                          - name: http
+                            containerPort: 8080
+                        resources:
+                          requests:
+                            cpu: 10m
+                            memory: 10Mi
+                          limits:
+                            cpu: 100m
+                            memory: 100Mi
+                        volumeMounts:
+                          - name: wwwroot
+                            mountPath: /srv/wwwroot
+                        securityContext:
+                          runAsUser: 65534 # nobody
+                          runAsGroup: 65534 # nobody
+                          allowPrivilegeEscalation: false
+                          readOnlyRootFilesystem: true
+                          capabilities:
+                            drop:
+                              - ALL
+                    volumes:
+                      - name: wwwroot
+                        emptyDir: {}
+                    securityContext:
+                      runAsNonRoot: true
+                      seccompProfile:
+                        type: RuntimeDefault
+            readyWhen:
+              - ${deployment.status.availableReplicas > 0}
+          - id: service
+            template:
+              apiVersion: v1
+              kind: Service
+              metadata:
+                name: ${schema.metadata.name}
+              spec:
+                type: NodePort
+                selector:
+                  app: ${schema.metadata.name}
+                ports:
+                  - name: http
+                    port: 8080
+                    protocol: TCP
+                    targetPort: http
+            readyWhen:
+              - ${has(service.spec.ports[0].nodePort)}

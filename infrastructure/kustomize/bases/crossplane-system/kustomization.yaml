@@ -1,0 +1,9 @@
+namespace: crossplane-system
+
+resources:
+  - namespace.yaml
+
+helmCharts:
+  - repo: https://charts.crossplane.io/stable
+    name: crossplane
+    version: 2.3.3

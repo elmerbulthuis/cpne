@@ -1,0 +1,6 @@
+apiVersion: cnpe.elmerbulthuis.com/v1
+kind: Greeter
+metadata:
+  name: french-greeter
+spec:
+  message: Bonjour!

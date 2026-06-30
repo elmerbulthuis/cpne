@@ -1,0 +1,3 @@
+resources:
+  - functions.yaml
+  - composite.yaml

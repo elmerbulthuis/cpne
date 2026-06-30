@@ -43,7 +43,7 @@ kubectl port-forward -n argocd  services/argocd-server 8080:80
 
 Go to [localhost:8080](http://localhost:8080) and ignore the https warnings and login with `admin` and the password you retrieved earlier.
 
-Create an application and point it to the `hello` application in this repository and have some fun with that!
+Checkout the playground for some fun examples.
 
 ## Flux
 
@@ -107,4 +107,4 @@ TODO
 
 ## Crossplane
 
-TODO
+There is the greeter CRDs that provide the Greeter kind that demonstrates usage of Crossplane composition. Install it via the `kubernetes-greeter-local.yaml` manifest and then play around with it in the playground.

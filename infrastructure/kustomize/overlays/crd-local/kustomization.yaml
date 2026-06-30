@@ -2,4 +2,5 @@ resources:
   - ../../bases/cert-manager
   - ../../bases/argocd
   - ../../bases/argo-rollouts
+  - ../../bases/crossplane-system
   - argo

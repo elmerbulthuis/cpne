@@ -8,6 +8,7 @@ vars:
   KUSTOMIZE_OVERLAYS:
     - hello-local
     - hi-local
+    - greeter-local
     - colors-local
   HELM_CHARTS:
     - goodmorning
@@ -109,6 +110,7 @@ tasks:
           as: OVERLAY
         cmd: >
           kustomize build
+          --enable-helm
           --output dist/kubernetes-{{.OVERLAY}}.yaml
           infrastructure/kustomize/overlays/{{.OVERLAY}}
 
