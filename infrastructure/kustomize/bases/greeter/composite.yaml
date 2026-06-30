@@ -45,7 +45,7 @@ spec:
   pipeline:
     - step: create-deployment-and-service
       functionRef:
-        name: crossplane-contrib-function-kro
+        name: greeter-function-kro
       input:
         apiVersion: kro.fn.crossplane.io/v1alpha1
         kind: ResourceGraph
