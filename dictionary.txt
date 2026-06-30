@@ -1,7 +1,8 @@
+authzpolicy
 CNPE
+crds
+deconflict
 elmerbulthuis
 finalizer
 finalizers
 kyverno
-xpkg
-openAPIV3

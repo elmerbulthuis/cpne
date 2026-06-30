@@ -16,7 +16,7 @@ Now you have a cluster with quite a few CNPE resources installed and configured!
 
 ## Linkerd
 
-TODO
+The Linkerd manifests can be generated via the `generate:linkerd` task.
 
 ## Istio
 
