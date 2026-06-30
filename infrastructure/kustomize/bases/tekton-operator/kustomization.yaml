@@ -1,0 +1,2 @@
+resources:
+  - https://github.com/tektoncd/operator/releases/download/v0.80.0/release.yaml
