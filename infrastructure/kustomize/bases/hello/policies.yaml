@@ -27,11 +27,11 @@ spec:
 apiVersion: policy.linkerd.io/v1beta3
 kind: Server
 metadata:
-  name: metrics
+  name: linkerd-metrics
 spec:
   podSelector:
     matchLabels:
-      app: hello
+      linkerd.io/control-plane-ns: linkerd
   port: 4191
 ---
 apiVersion: policy.linkerd.io/v1alpha1
@@ -42,7 +42,7 @@ spec:
   targetRef:
     group: policy.linkerd.io
     kind: Server
-    name: metrics
+    name: linkerd-metrics
   requiredAuthenticationRefs:
     - kind: ServiceAccount
       name: prometheus
