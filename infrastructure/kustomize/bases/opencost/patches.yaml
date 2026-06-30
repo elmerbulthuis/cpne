@@ -18,8 +18,8 @@ spec:
               cpu: 100m
               memory: 100Mi
           securityContext:
-            runAsUser: 65534 # nobody
-            runAsGroup: 65534 # nobody
+            runAsUser: 1001
+            runAsGroup: 1001
             allowPrivilegeEscalation: false
             readOnlyRootFilesystem: true
             capabilities:
@@ -34,10 +34,10 @@ spec:
               cpu: 100m
               memory: 100Mi
           securityContext:
-            runAsUser: 65534 # nobody
-            runAsGroup: 65534 # nobody
+            runAsUser: 1001
+            runAsGroup: 1001
             allowPrivilegeEscalation: false
-            readOnlyRootFilesystem: true
+            readOnlyRootFilesystem: false # this container writes something
             capabilities:
               drop:
                 - ALL
