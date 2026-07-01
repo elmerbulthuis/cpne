@@ -127,11 +127,9 @@ There is the greeter CRDs that provide the Greeter kind that demonstrates usage 
 
 ## Vertical Pod Autoscaler
 
-The hello application has a vertical pod autoscaler!
+The hello-client application has a vertical pod autoscaler!
 
 VPA uses metrics server for metrics,
-
-Produce some load on the server by scaling the client
 
 ```sh
 kubectl scale -n hello-client deployment hello-client --replicas 20
@@ -140,5 +138,5 @@ kubectl scale -n hello-client deployment hello-client --replicas 20
 see what vpa thinks about it
 
 ```sh
-kubectl describe -n hello vpa hello
+kubectl describe -n hello-client vpa hello-client
 ```

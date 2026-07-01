@@ -3,3 +3,9 @@ namespace: kube-system
 resources:
   - secrets.yaml
   - github.com/kubernetes/autoscaler/vertical-pod-autoscaler/deploy?ref=vertical-pod-autoscaler-1.7.0
+
+replicas:
+  # switch off the admission controller, we don't need it for
+  # update mode Off and it needs a secret to start
+  - name: vpa-admission-controller
+    count: 0
