@@ -1,7 +1,6 @@
 namespace: kube-system
 
 resources:
-  - secrets.yaml
   - github.com/kubernetes/autoscaler/vertical-pod-autoscaler/deploy?ref=vertical-pod-autoscaler-1.7.0
 
 replicas:
