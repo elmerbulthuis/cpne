@@ -129,14 +129,10 @@ There is the greeter CRDs that provide the Greeter kind that demonstrates usage 
 
 The hello-client application has a vertical pod autoscaler!
 
-VPA uses metrics server for metrics,
-
-```sh
-kubectl scale -n hello-client deployment hello-client --replicas 20
-```
-
 see what vpa thinks about it
 
 ```sh
 kubectl describe -n hello-client vpa hello-client
 ```
+
+The admission controller is switched off! So replace will not work, so no mutations! The admission controller needs some configuration that is out off scope for CNPE.
