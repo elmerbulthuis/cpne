@@ -124,3 +124,21 @@ Open cost installed, node exporter is missing, cost is based on kube state metri
 ## Crossplane
 
 There is the greeter CRDs that provide the Greeter kind that demonstrates usage of Crossplane composition. Install it via the `kubernetes-greeter-local.yaml` manifest and then play around with it in the playground.
+
+## Vertical Pod Autoscaler
+
+The hello application has a vertical pod autoscaler!
+
+VPA uses metrics server for metrics,
+
+Produce some load on the server by scaling the client
+
+```sh
+kubectl scale -n hello-client deployment hello-client --replicas 20
+```
+
+see what vpa thinks about it
+
+```sh
+kubectl describe -n hello vpa hello
+```
