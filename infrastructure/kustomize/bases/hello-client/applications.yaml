@@ -15,7 +15,9 @@ spec:
         app: hello-client
     spec:
       containers:
-        - command:
+        - name: client
+          image: alpine:3.24
+          command:
             - sh
             - -c
             - |
@@ -23,8 +25,6 @@ spec:
                 wget --spider http://hello.hello:8080
                 sleep 5
               done
-          image: alpine:3.24
-          name: client
           resources:
             requests:
               cpu: 10m
@@ -44,3 +44,28 @@ spec:
         runAsNonRoot: true
         seccompProfile:
           type: RuntimeDefault
+---
+apiVersion: autoscaling.k8s.io/v1
+kind: VerticalPodAutoscaler
+metadata:
+  name: hello-client
+spec:
+  targetRef:
+    apiVersion: "apps/v1"
+    kind: Deployment
+    name: hello-client
+  updatePolicy:
+    updateMode: "Off"
+  resourcePolicy:
+    containerPolicies:
+      - containerName: "server"
+        minAllowed:
+          cpu: 10m
+          memory: 10Mi
+        maxAllowed:
+          cpu: 100m
+          memory: 100Mi
+        controlledResources:
+          - cpu
+          - memory
+        controlledValues: RequestsOnly
