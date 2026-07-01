@@ -15,15 +15,15 @@ spec:
         app: hello
     spec:
       containers:
-        - command:
+        - name: server
+          image: python:3-alpine
+          command:
             - python
             - -m
             - http.server
             - -d
             - /srv/wwwroot
             - "8080"
-          image: python:3-alpine
-          name: python
           ports:
             - name: http
               containerPort: 8080
@@ -32,8 +32,8 @@ spec:
               cpu: 10m
               memory: 10Mi
             limits:
-              cpu: 100m
-              memory: 100Mi
+              cpu: 200m
+              memory: 200Mi
           volumeMounts:
             - name: wwwroot
               mountPath: /srv/wwwroot
@@ -53,7 +53,6 @@ spec:
         runAsNonRoot: true
         seccompProfile:
           type: RuntimeDefault
-
 ---
 apiVersion: v1
 kind: Service

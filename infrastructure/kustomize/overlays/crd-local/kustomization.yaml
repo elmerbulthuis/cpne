@@ -1,6 +1,8 @@
 resources:
   - ../../bases/gateway-api
   - ../../bases/kube-state-metrics
+  - ../../bases/vertical-pod-autoscaler
+  - ../../bases/metrics-server
   - ../../bases/linkerd
   - ../../bases/cert-manager
   - ../../bases/argocd
