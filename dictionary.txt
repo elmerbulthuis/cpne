@@ -8,3 +8,4 @@ finalizers
 kyverno
 xpkg
 openAPIV3
+kubelet
